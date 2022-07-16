@@ -32,27 +32,27 @@ class SmokeTest(unittest.TestCase):
         except Exception as e:
             print("e is {}".format(e))
 
-        resBody = res.json()
+        res_body = res.json()
 
         # testing whether API is successfully fetched
         self.assertEqual(200, res.status_code)
         # check whether req and res are correct
-        self.assertEqual(req_body['text'], resBody['text'])
+        self.assertEqual(req_body['text'], res_body['text'])
         # This test is related to the input text. As this is related to the Eiffel tower, I assumed that output also should contains the word "Eiffel Tower"
-        self.assertTrue(str(resBody['summary']).find("Eiffel Tower"))
+        self.assertTrue(str(res_body['summary']).find("Eiffel Tower"))
         # length of the summary should be greater than 0
-        self.assertGreater(len(str(resBody['summary']).strip()), 0)
+        self.assertGreater(len(str(res_body['summary']).strip()), 0)
         
 
         req_body = {'text': 'Weaviate is a vector search engine and vector database. Weaviate uses machine learning to vectorize and store data, and to find answers to natural language queries. With Weaviate you can also bring your custom ML models to production scale.'}
         res = requests.post(url, json=req_body)
-        resBody = res.json()
+        res_body = res.json()
 
         
         self.assertEqual(200, res.status_code)
-        self.assertEqual(req_body['text'], resBody['text'])
-        self.assertTrue(str(resBody['summary']).find("Weaviate"))
-        self.assertGreater(len(str(resBody['summary']).strip()), 0)
+        self.assertEqual(req_body['text'], res_body['text'])
+        self.assertTrue(str(res_body['summary']).find("Weaviate"))
+        self.assertGreater(len(str(res_body['summary']).strip()), 0)
 
     def testMeta(self):
         self._waitForStartup()
@@ -61,11 +61,10 @@ class SmokeTest(unittest.TestCase):
             res = requests.get(url)
         except Exception as e:
             print("e is {}".format(e))
-        resBody = res.json()
-        print(resBody)
+        res_body = res.json()
         self.assertEqual(200, res.status_code)
-        self.assertTrue('facebook' in resBody['model']['_name_or_path'])
-        self.assertEqual(type(resBody), type({}))
+        self.assertTrue('facebook' in res_body['model']['_name_or_path'])
+        self.assertEqual(type(res_body), type({}))
 
 
 if __name__ == "__main__":

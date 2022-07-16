@@ -43,7 +43,7 @@ def meta():
     return meta_config.get()
 
 
-@app.post("/sum/")
+@app.post("/sum")
 async def read_item(item: SumInput, response: Response):
     try:
         summary = await sum.do(item)

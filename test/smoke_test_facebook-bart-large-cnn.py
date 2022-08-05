@@ -63,7 +63,7 @@ class SmokeTest(unittest.TestCase):
             print("e is {}".format(e))
         res_body = res.json()
         self.assertEqual(200, res.status_code)
-        self.assertTrue('facebook' in res_body['model']['_name_or_path'])
+        self.assertTrue('_name_or_path' in res_body['model'])
         self.assertEqual(type(res_body), type({}))
 
 

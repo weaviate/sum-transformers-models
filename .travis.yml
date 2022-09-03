@@ -13,10 +13,11 @@ install: echo skipping default travis install script
 jobs:
   include:
     # always run test, etc. for this model
-    - env:
-        MODEL_NAME: google/pegasus-xsum
-        MODEL_TAG_NAME: google-pegasus-xsum
-      stage: buildanddeploy
+    # Commented bc it fails to build a docker image on travis
+    # - env:
+    #     MODEL_NAME: google/pegasus-xsum
+    #     MODEL_TAG_NAME: google-pegasus-xsum
+    #   stage: buildanddeploy
 
     - env:
         MODEL_NAME: facebook/bart-large-cnn

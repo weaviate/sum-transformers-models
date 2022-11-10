@@ -1,6 +1,6 @@
 from transformers import AutoModelForSeq2SeqLM, AutoTokenizer, pipeline
 from pydantic import BaseModel
-import torch
+from optimum.onnxruntime import ORTModelForSeq2SeqLM
 
 class SumInput(BaseModel):
     text: str
@@ -11,15 +11,21 @@ class Sum:
     cuda: bool
     cuda_core: str
 
-    def __init__(self, model_path: str, cuda_support: bool, cuda_core: str):
+    def __init__(self, model_path: str, cuda_support: bool, cuda_core: str, onnx_runtime: bool):
         self.cuda = cuda_support
         self.cuda_core = cuda_core
-        self.model = AutoModelForSeq2SeqLM.from_pretrained(model_path)
+
+        if onnx_runtime:
+            self.model = ORTModelForSeq2SeqLM.from_pretrained(model_path)
+        else:
+            self.model = AutoModelForSeq2SeqLM.from_pretrained(model_path)
+
         device = -1
         if self.cuda:
             self.model.to(self.cuda_core)
             device = int(cuda_core[5:]) # form is e.g. cuda:3
-        self.model.eval() # make sure we're in inference mode, not training
+        if not onnx_runtime:
+            self.model.eval() # make sure we're in inference mode, not training
 
         self.tokenizer = AutoTokenizer.from_pretrained(model_path)
 

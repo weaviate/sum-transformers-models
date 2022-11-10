@@ -24,6 +24,12 @@ jobs:
         MODEL_TAG_NAME: facebook-bart-large-cnn
       stage: buildanddeploy
 
+    - env:
+        MODEL_NAME: facebook/bart-large-cnn
+        MODEL_TAG_NAME: facebook-bart-large-cnn
+        ONNX_RUNTIME: true
+      stage: buildanddeploy
+
     - name: Build the base for custom images
       script: GIT_BRANCH=$TRAVIS_BRANCH GIT_TAG=$TRAVIS_TAG GIT_PULL_REQUEST=$TRAVIS_PULL_REQUEST cicd/build_custom_base.sh
       stage: postbuild

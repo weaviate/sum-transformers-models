@@ -28,8 +28,13 @@ def startup_event():
     else:
         logger.info("Running on CPU")
 
-    sum = Sum('./models/model', cuda_support, cuda_core)
-    meta_config = Meta('./models/model')
+    model_dir = './models/model'
+    onnx_runtime = os.path.exists(f"{model_dir}/decoder_model.onnx")
+    if onnx_runtime:
+        logger.info("Running using ONNX runtime")
+
+    sum = Sum(model_dir, cuda_support, cuda_core, onnx_runtime)
+    meta_config = Meta(model_dir)
 
 
 @app.get("/.well-known/live", response_class=Response)

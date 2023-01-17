@@ -50,7 +50,6 @@ class SmokeTest(unittest.TestCase):
         res = requests.post(url, json=req_body)
         res_body = res.json()
 
-        
         self.assertEqual(200, res.status_code)
         self.assertEqual(req_body['text'], res_body['text'])
         self.assertTrue(str(res_body['summary']).find("Weaviate"))

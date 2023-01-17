@@ -42,8 +42,6 @@ class SmokeTest(unittest.TestCase):
         self.assertTrue(str(res_body['summary']).find("Eiffel Tower"))
         # length of the summary should be greater than 0
         self.assertGreater(len(str(res_body['summary']).strip()), 0)
-        print(f"Test 1 result: {str(res_body['summary'][0]['result'])}")
-        
 
         req_body = {'text': 'Weaviate is a vector search engine and vector database. Weaviate uses machine learning to vectorize and store data, and to find answers to natural language queries. With Weaviate you can also bring your custom ML models to production scale.'}
         res = requests.post(url, json=req_body)
@@ -54,7 +52,6 @@ class SmokeTest(unittest.TestCase):
         self.assertEqual(req_body['text'], res_body['text'])
         self.assertTrue(str(res_body['summary']).find("Weaviate"))
         self.assertGreater(len(str(res_body['summary']).strip()), 0)
-        print(f"Test 2 result: {str(res_body['summary'][0]['result'])}")
 
     def testMeta(self):
         self._waitForStartup()

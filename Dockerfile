@@ -8,6 +8,7 @@ ENV PATH="$PATH:/root/.cargo/bin"
 
 ARG MODEL_NAME
 ARG ONNX_RUNTIME
+ARG ONNX_CPU
 COPY download.py .
 RUN chmod +x ./download.py
 RUN ./download.py

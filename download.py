@@ -2,7 +2,6 @@
 
 import os
 import sys
-import logging
 import json
 from transformers import AutoTokenizer, AutoModelForSeq2SeqLM
 from optimum.onnxruntime import ORTModelForSeq2SeqLM
@@ -31,7 +30,7 @@ onnx_cpu_arch = os.getenv('ONNX_CPU')
 if not onnx_cpu_arch:
     onnx_cpu_arch = "ARM64"
 
-logging.info(f"Downloading model ${model_name} from huggingface model hub")
+print(f"Downloading model ${model_name} from huggingface model hub (ONNX_RUNTIME={onnx_runtime}, ONNX_CPU={onnx_cpu_arch})")
 
 tokenizer = AutoTokenizer.from_pretrained(model_name)
 tokenizer.save_pretrained(model_dir)

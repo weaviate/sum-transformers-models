@@ -24,6 +24,11 @@ jobs:
           - model_name: facebook/bart-large-cnn
             model_tag_name: facebook-bart-large-cnn
             onnx_runtime: true
+            onnx_cpu: ARM64
+          - model_name: facebook/bart-large-cnn
+            model_tag_name: facebook-bart-large-cnn
+            onnx_runtime: true
+            onnx_cpu: AVX512_VNNI
           - model_name: google/pegasus-xsum
             model_tag_name: google-pegasus-xsum
             onnx_runtime: false
@@ -36,6 +41,7 @@ jobs:
       MODEL_NAME: ${{matrix.model_name}}
       MODEL_TAG_NAME: ${{matrix.model_tag_name}}
       ONNX_RUNTIME: ${{matrix.onnx_runtime}}
+      ONNX_CPU: ${{matrix.onnx_cpu}}
     steps:
       - uses: actions/checkout@v3
       - uses: actions/setup-python@v4
@@ -57,10 +63,6 @@ jobs:
           DOCKER_USERNAME: ${{secrets.DOCKER_USERNAME}}
           DOCKER_PASSWORD: ${{secrets.DOCKER_PASSWORD}}
         run: |
-          sudo rm -rf /usr/share/dotnet
-          sudo rm -rf /opt/ghc
-          sudo rm -rf "/usr/local/share/boost"
-          sudo rm -rf "$AGENT_TOOLSDIRECTORY"
           export GIT_TAG=${GITHUB_REF##*/}
           cicd/docker_push.sh || exit 1
   build-custom-image:

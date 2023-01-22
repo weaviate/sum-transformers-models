@@ -76,12 +76,13 @@ function push_tag() {
     tag_latest="$remote_repo:$model_name-latest"
     tag="$remote_repo:$model_name"
     platform="linux/arm64,linux/amd64"
-    if [ "$onnx_runtime" == "true"]; then
-      tag_git="$remote_repo:$model_name-onnx-$onnx_cpu-$GIT_TAG"
-      tag_latest="$remote_repo:$model_name-onnx-$onnx_cpu-latest"
-      tag="$remote_repo:$model_name-onnx-$onnx_cpu"
+    if [ "$onnx_runtime" == "true" ]; then
+      onnx_cpu_lowercased=${onnx_cpu,,}
+      tag_git="$remote_repo:$model_name-onnx-$onnx_cpu_lowercased-$GIT_TAG"
+      tag_latest="$remote_repo:$model_name-onnx-$onnx_cpu_lowercased-latest"
+      tag="$remote_repo:$model_name-onnx-$onnx_cpu_lowercased"
       platform="linux/amd64"
-      if [ "$onnx_cpu" == "arm64"] || [ "$onnx_cpu" == "ARM64"]; then
+      if [ "$onnx_cpu_lowercased" == "arm64" ]; then
         platform="linux/arm64"
       fi
     fi
